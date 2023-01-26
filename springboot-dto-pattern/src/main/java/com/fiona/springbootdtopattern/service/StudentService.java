@@ -3,6 +3,8 @@ package com.fiona.springbootdtopattern.service;
 import com.fiona.springbootdtopattern.dto.StudentLocationDTO;
 import com.fiona.springbootdtopattern.model.Student;
 import com.fiona.springbootdtopattern.repository.StudentRepository;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ import java.util.stream.Collectors;
 public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     // the map() method applies the convertEntityToDto method to each element in the stream,
     // which is an instance of the Student class, and returns a new stream with elements of StudentLocationDTO class.
@@ -23,11 +27,19 @@ public class StudentService {
                 .collect(Collectors.toList()); //converts the dto to a list
     }
 
+//    private StudentLocationDTO convertEntityToDto(Student student){
+//        StudentLocationDTO studentLocationDTO = new StudentLocationDTO();
+//        studentLocationDTO.setStudentId(student.getId());
+//        studentLocationDTO.setEmail(student.getEmail());
+//        studentLocationDTO.setPlace(student.getLocation().getPlace());
+//        return studentLocationDTO;
+//    }
     private StudentLocationDTO convertEntityToDto(Student student){
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
         StudentLocationDTO studentLocationDTO = new StudentLocationDTO();
-        studentLocationDTO.setStudentId(student.getId());
-        studentLocationDTO.setEmail(student.getEmail());
-        studentLocationDTO.setPlace(student.getLocation().getPlace());
+        //replace all the code with a model mapper
+        studentLocationDTO = modelMapper.map(student, StudentLocationDTO.class);
         return studentLocationDTO;
     }
 

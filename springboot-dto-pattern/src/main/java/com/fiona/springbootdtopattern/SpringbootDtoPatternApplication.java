@@ -52,7 +52,7 @@ public class SpringbootDtoPatternApplication implements CommandLineRunner {
 		Student student2= new Student();
 		student1.setFirstName("Fauna");
 		student1.setLastName("Mumbi");
-		student1.setEmail("flora45@gmail.com");
+		student1.setEmail("Fauna@gmail.com");
 		student1.setPassword("123");
 		student2.setLocation(location);
 		studentRepository.save(student2);
