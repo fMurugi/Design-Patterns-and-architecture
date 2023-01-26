@@ -43,4 +43,14 @@ public class StudentService {
         return studentLocationDTO;
     }
 
+    //convert dto  to a jpa entity
+    private Student convertDtoToStudent(StudentLocationDTO   studentLocationDTO){
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.LOOSE);
+        Student student = new Student();
+        //replace all the code with a model mapper
+        student = modelMapper.map(studentLocationDTO, Student.class);
+        return student;
+    }
+
 }
